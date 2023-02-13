@@ -41,7 +41,10 @@ Route::middleware([BearerAuth::class])->group(function () {
     });
 //todo: use permissions instead of grouped roles for some to test
     Route::group(['middleware' => ['role:Admin']], function () {
-//        Role Controls
+
+        Route::get('/user/view/access_tokens/{user}', [UserController::class, 'showUserAccessTokens']);
+
+        //Role Controls
         Route::get('/role/all', [RoleController::class, 'index']);
         Route::get('/role/{role}', [RoleController::class, 'show']);
         Route::post('/role/create/', [RoleController::class, 'create']);

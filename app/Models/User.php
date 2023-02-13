@@ -46,7 +46,7 @@ class User extends Authenticatable
     ];
 
     public function personalAccessTokens(){
-        return $this->hasMany(PersonalAccessToken::class);
+        return $this->hasMany(\Laravel\Sanctum\PersonalAccessToken::class);
     }
 
     protected $guard_name = 'web';

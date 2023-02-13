@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $data = $request->only(["email", "password"]);
@@ -24,12 +28,16 @@ class LoginController extends Controller
                     'token' => $token->token,
                     'type' => 'bearer',
                 ]
-            ],200);
+            ], 200);
         }
 
         return response()->json(['error' => 'Unauthorized ' . Auth::attempt($data)], 401);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request)
     {
         $validatedData = $request->validate([
