@@ -23,19 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/user/register',[LoginController::class, 'register']);
-Route::post('/user/login',[LoginController::class, 'login']);
+Route::post('/user/register', [LoginController::class, 'register']);
+Route::post('/user/login', [LoginController::class, 'login']);
 
 Route::middleware([BearerAuth::class])->group(function () {
     //verify bearer token supplied
-    Route::get('/user/all  ', [UserController::class, 'index']);
-    Route::get('/user/{user}', [UserController::class, 'show']);
+    Route::get('/user/all', [UserController::class, 'index']);
+    Route::get('/user/{user:id}', [UserController::class, 'show']);
 
     //verify bearer token supplied and token's relevant user also has neccessary spattie permissions
     Route::group(['middleware' => ['role:Admin|Moderator']], function () {
         Route::put('/user/update/{user}', [UserController::class, 'update']);
         Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
-
 
 
     });
@@ -64,7 +63,6 @@ Route::middleware([BearerAuth::class])->group(function () {
         Route::delete('/permission/delete/{permission}', [PermissionController::class, 'destroy']);
         Route::post('/permission/create/', [PermissionController::class, 'create']);
         Route::post('/permission/assignRole/', [PermissionController::class, 'assignRole']);
-
 
     });
 });

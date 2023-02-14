@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-
 abstract class ApiBaseController extends Controller
 {
     /**
@@ -15,12 +14,13 @@ abstract class ApiBaseController extends Controller
      * @param int $status
      * @return JsonResponse
      */
-    protected function response(array $data, int $status = 200) : JsonResponse
+    protected function response(array $data, int $status = 200): JsonResponse
     {
         return response()->json($data, $status);
     }
 
     /**
+     * @param Request $request
      * @param string $message
      * @param int $status
      * @return JsonResponse

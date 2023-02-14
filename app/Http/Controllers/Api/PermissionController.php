@@ -11,7 +11,6 @@ use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
-    //
     /**
      * @return JsonResponse
      */
@@ -58,7 +57,7 @@ class PermissionController extends Controller
             return $this->response([
                 'message' => "Permission delete successfully!",
                 'Permission' => $permission
-            ],200);
+            ], 200);
 
         } else {
             return $this->errorResponse(

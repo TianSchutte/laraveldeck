@@ -25,7 +25,6 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-roles']);
 
 
-
         $adminRole = Role::create(['name' => 'Admin']);
         $moderatorRole = Role::create(['name' => 'Moderator']);
         $userRole = Role::create(['name' => 'User']);

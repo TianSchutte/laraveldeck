@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +10,6 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends ApiBaseController
 {
-    //
     /**
      * @return JsonResponse
      */
@@ -69,10 +66,10 @@ class RoleController extends ApiBaseController
         ]);
 
         return $this->response([
-                'message' => "Role Created successfully!",
-                'Role' => Role::create([
-                    'name' => $validateData['name']
-                ])
+            'message' => "Role Created successfully!",
+            'Role' => Role::create([
+                'name' => $validateData['name']
+            ])
         ], 200);
     }
 
@@ -104,7 +101,7 @@ class RoleController extends ApiBaseController
      */
     public function revokeUserRole(Request $request, User $user)
     {
-        $validateData =  $request->validate([
+        $validateData = $request->validate([
             "role_name" => "required|string"
         ]);
         $user->removeRole($validateData['role_name']);

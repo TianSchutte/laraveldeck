@@ -18,11 +18,11 @@ class UserSeeder extends Seeder
 
         //admin
         $user = User::create([
-            'name'=>'tian',
-            'surname'=>'schutte',
-            'email'=>'tianschutte1@gmail.com',
-            'password'=>bcrypt('aaaaaaaa')
-            ]);
+            'name' => 'tian',
+            'surname' => 'schutte',
+            'email' => 'tianschutte1@gmail.com',
+            'password' => bcrypt('aaaaaaaa')
+        ]);
 
         $user->assignRole('Admin');
     }
