@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -46,7 +47,7 @@ class User extends Authenticatable
     ];
 
     public function personalAccessTokens(){
-        return $this->hasMany(\Laravel\Sanctum\PersonalAccessToken::class);
+        return $this->hasMany(PersonalAccessToken::class,'tokenable_id');
     }
 
     protected $guard_name = 'web';

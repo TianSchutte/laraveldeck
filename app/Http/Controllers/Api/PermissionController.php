@@ -17,10 +17,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::all();
-
         return response()->json([
-            'Permissions' => $permissions
+            'Permissions' => Permission::all()
         ], 201);
     }
 
@@ -30,10 +28,8 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        $permission = Permission::findById($id);
-
         return response()->json([
-            'Permission' => $permission
+            'Permission' => Permission::findById($id)
         ], 201);
     }
 
@@ -44,14 +40,12 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-
-        $permission->fill($request->all());
-        $permission->save();
-
-        return response()->json([
-            'message' => "Permission Updated successfully!",
-            'Permission' => $permission,
-        ], 200);
+//        $permission->fill($request->all());
+        if ($permission->update($request->all())) {
+            return $this->response(['message' => "Permission updated successfully!", 'Permission' => $permission]);
+        } else {
+            return $this->errorResponse($request, 'Failed to update user', 500);
+        }
     }
 
     /**
@@ -60,11 +54,18 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission->delete();
+        if ($permission->delete()) {
+            return $this->response([
+                'message' => "Permission delete successfully!",
+                'Permission' => $permission
+            ],200);
 
-        return response()->json([
-            'message' => "Permission Deleted successfully!",
-        ], 200);
+        } else {
+            return $this->errorResponse(
+                null,
+                'Failed to delete Permission',
+                500);
+        }
     }
 
     /**
@@ -73,8 +74,13 @@ class PermissionController extends Controller
      */
     public function create(Request $request)
     {
-        $validateData = $request->only("name");
-        $permission = Permission::create(['name' => $validateData['name']]);
+        $validateData = $request->validate([
+            "name" => "required|string"
+        ]);
+
+        $permission = Permission::create([
+            'name' => $validateData['name']
+        ]);
 
         return response()->json([
             'message' => "Permission Created successfully!",
@@ -88,7 +94,10 @@ class PermissionController extends Controller
      */
     public function assignRole(Request $request)
     {
-        $validateData = $request->only(["permission_name", "role_name"]);
+        $validateData = $request->validate([
+            "permission_name" => "required|string",
+            "role_name" => "required|string",
+        ]);
 
         $permission = Permission::findByName($validateData['permission_name']);
         $role = Role::findByName($validateData['role_name']);

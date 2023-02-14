@@ -5,149 +5,167 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RoleController extends Controller
+class RoleController extends ApiBaseController
 {
     //
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
-        $roles = Role::all();
-
-        return response()->json([
-            'Roles' => $roles
-        ], 201);
+        return $this->response(['Roles' => Role::all()], 201);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function show($id)
     {
-        $role = Role::findById($id);
-
-        return response()->json([
-            'Role' => $role
-        ], 201);
+        return $this->response(['Roles' => Role::findById($id)], 200);
     }
 
     /**
      * @param Request $request
      * @param Role $role
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update(Request $request, Role $role)
     {
-
-        $role->fill($request->all());
-        $role->save();
-
-        return response()->json([
-            'message' => "Role Updated successfully!",
-            'Role' => $role,
-        ], 200);
+        if ($role->update($request->all())) {
+            return $this->response(['message' => "Role updated successfully!", 'User' => $user]);
+        } else {
+            return $this->errorResponse($request, 'Failed to update role', 500);
+        }
     }
 
     /**
      * @param Role $role
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function destroy(Role $role)
     {
-        $role->delete();
+        if ($role->delete()) {
+            return $this->response(['message' => "Role delete successfully!", 'User' => $role], 200);
 
-        return response()->json([
-            'message' => "Role Deleted successfully!",
-        ], 200);
+        } else {
+            return $this->errorResponse(null, 'Failed to delete role', 500);
+        }
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function create(Request $request)
     {
-        $validateData = $request->only("name");
-        $role = Role::create(['name' => $validateData['name']]);
+        $validateData = $request->validate([
+            "name" => "required|string"
+        ]);
 
-        return response()->json([
-            'message' => "Role Created successfully!",
-            'role' => $role
+        return $this->response([
+                'message' => "Role Created successfully!",
+                'Role' => Role::create([
+                    'name' => $validateData['name']
+                ])
         ], 200);
     }
 
     /**
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function grantUserRole(Request $request, User $user)
     {
-        $validateData = $request->only("role_name");
+        $validateData = $request->validate([
+            "role_name" => "required|string"
+        ]);
 
         $user->assignRole($validateData['role_name']);
 
-        return response()->json([
-            'message' => "Role Added successfully!",
-            'role' => $user->getRoleNames()
+        return $this->response([
+            'message' => "Role Added to User successfully!",
+            'Role' => Role::create([
+                'name' => $user->getRoleNames()
+            ])
         ], 200);
     }
 
     /**
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function revokeUserRole(Request $request, User $user)
     {
-        $validateData = $request->only("role_name");
-
+        $validateData =  $request->validate([
+            "role_name" => "required|string"
+        ]);
         $user->removeRole($validateData['role_name']);
 
-        return response()->json([
-            'message' => "Role Removed successfully!",
-            'role' => $user->getRoleNames()
+        return $this->response([
+            'message' => "Role(s) Revoked to User successfully!",
+            'Role' => Role::create([
+                'name' => $user->getRoleNames()
+            ])
         ], 200);
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function viewRoleUsers(Request $request)
     {
-        $validateData = $request->only("role_name");
-        $users = User::role($validateData["role_name"])->get();
+        $validatedData = $request->validate([
+            "role_name" => "required|string"
+        ]);
 
-        return response()->json([
-            'Role Users' => $users
+        $roleName = $validatedData["role_name"];
+        $roleUsers = User::role($roleName)->get();
+
+        return $this->response([
+            'Role Users' => $roleUsers
         ], 200);
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function assignPermissions(Request $request)
     {
-        $validateData = $request->only(["permission_name", "role_name"]);
+        $validatedData = $request->validate([
+            "permission_name" => "required",
+            "role_name" => "required"
+        ]);
 
-        $permission = Permission::findByName($validateData['permission_name']);
-        $role = Role::findByName($validateData['role_name']);
+        $permission = Permission::findByName($validatedData['permission_name']);
+        if (!$permission) {
+            return $this->response([
+                'message' => "Permission not found!",
+            ], 404);
+        }
+
+        $role = Role::findByName($validatedData['role_name']);
+        if (!$role) {
+            return $this->response([
+                'message' => "Role not found!",
+            ], 404);
+        }
 
         $role->givePermissionTo($permission);
 
-        return response()->json([
+        return $this->response([
             'message' => "Permission assigned to role successfully!",
-            'Permission' => $permission,
-            'Role' => $role,
+            'permission' => $permission,
+            'role' => $role
         ], 200);
     }
-
 }
