@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45c9500937307936a0e3e5c0b59e9f85",
+    "content-hash": "15f5bd7045edf65f0a87027b6b8ed5e3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5245,6 +5245,42 @@
                 }
             ],
             "time": "2023-01-16T10:52:33+00:00"
+        },
+        {
+            "name": "tian/weatherapi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TianSchutte/weatherapi.git",
+                "reference": "9c3826d71451dc9c29adedda4fd80126a4a10e8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TianSchutte/weatherapi/zipball/9c3826d71451dc9c29adedda4fd80126a4a10e8d",
+                "reference": "9c3826d71451dc9c29adedda4fd80126a4a10e8d",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tian\\Weatherapi\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Tian Schutte"
+                }
+            ],
+            "description": "an Weather Api",
+            "support": {
+                "source": "https://github.com/TianSchutte/weatherapi/tree/master",
+                "issues": "https://github.com/TianSchutte/weatherapi/issues"
+            },
+            "time": "2023-02-17T05:30:55+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
