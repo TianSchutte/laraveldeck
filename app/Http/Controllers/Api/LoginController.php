@@ -60,4 +60,12 @@ class LoginController extends Controller
             'user' => $user,
         ], 201);
     }
+    //
+    public function index(){
+        return view('register');
+    }
+
+    public function loginView(){
+        return view('login');
+    }
 }

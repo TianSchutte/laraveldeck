@@ -5252,12 +5252,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TianSchutte/weatherapi.git",
-                "reference": "9c3826d71451dc9c29adedda4fd80126a4a10e8d"
+                "reference": "69fd3bb4b1eebe38878313c9f41fbfe042dc6367"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TianSchutte/weatherapi/zipball/9c3826d71451dc9c29adedda4fd80126a4a10e8d",
-                "reference": "9c3826d71451dc9c29adedda4fd80126a4a10e8d",
+                "url": "https://api.github.com/repos/TianSchutte/weatherapi/zipball/69fd3bb4b1eebe38878313c9f41fbfe042dc6367",
+                "reference": "69fd3bb4b1eebe38878313c9f41fbfe042dc6367",
                 "shasum": ""
             },
             "require": {
@@ -5280,7 +5280,7 @@
                 "source": "https://github.com/TianSchutte/weatherapi/tree/master",
                 "issues": "https://github.com/TianSchutte/weatherapi/issues"
             },
-            "time": "2023-02-17T05:30:55+00:00"
+            "time": "2023-02-17T06:00:37+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
