@@ -47,13 +47,16 @@ class LoginController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
         ]);
-
-        $user = User::create([
+        $user= User::create([
             'name' => $validatedData['name'],
             'surname' => $validatedData['surname'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
+            'player_status' => 'registered',
+            'country' => 'NZ',
+            'currency_code' => "NZD",
         ]);
+//        dd($user);
 
         return response()->json([
             'success' => 'User Registered',

@@ -165,7 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
-        Tian\Weatherapi\Providers\WeatherProvider::class,
+//        Tian\Weatherapi\Providers\WeatherProvider::class,
+        TianSchutte\MailwizzSync\Providers\MailWizzProvider::class,
         /*
          * Application Service Providers...
          */

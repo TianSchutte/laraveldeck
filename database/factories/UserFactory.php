@@ -17,8 +17,10 @@ class UserFactory extends Factory
         return [
             'name' =>  $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
-            'status' => $this->faker->randomKey(),
+            'player_status' => $this->faker->randomElement(['regular', 'registered', 'vip', 'lapsed']),
             'email' => $this->faker->unique()->safeEmail(),
+            'country' => $this->faker->randomElement(['AU', 'NZ', 'ZA', 'US', 'UK']),
+            'currency_code' => $this->faker->currencyCode(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

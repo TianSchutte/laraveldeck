@@ -7,7 +7,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/TianSchutte/weatherapi"
+            "url": "https://github.com/TianSchutte/mailwizz-sync"
         }
     ],
     "require": {
@@ -18,7 +18,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "spatie/laravel-permission": "^5.9",
-        "tian/weatherapi": "dev-master"
+        "tianschutte/mailwizz-sync": "dev-dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
